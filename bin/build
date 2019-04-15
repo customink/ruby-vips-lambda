@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+IMAGE_NAME=ruby-vips-lambda
+VIPS_VERSION=${VIPS_VERSION:=8.7.4}
+
+rm -rf ./share
+mkdir ./share
+
+docker build \
+  --no-cache \
+  --build-arg VIPS_VERSION=${VIPS_VERSION} \
+  -t $IMAGE_NAME .
+
+docker run --rm \
+  -v "${PWD}/share:/share" \
+  $IMAGE_NAME \
+  sh -c "cp /build/share/libvips.zip /share"
