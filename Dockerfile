@@ -24,6 +24,7 @@ RUN git clone git://github.com/libvips/libvips.git && \
 # Compile from source.
 #
 RUN cd ./libvips && \
+  CC=clang CXX=clang++ \
   ./autogen.sh \
   --prefix=${INSTALLDIR} \
   --disable-static && \
