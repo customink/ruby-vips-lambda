@@ -27,7 +27,8 @@ RUN cd ./libvips && \
   CC=clang CXX=clang++ \
   ./autogen.sh \
   --prefix=${INSTALLDIR} \
-  --disable-static && \
+  --disable-static \
+  --without-magick && \
   make install && \
   echo /opt/lib > /etc/ld.so.conf.d/libvips.conf && \
   ldconfig
