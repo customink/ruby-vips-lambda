@@ -29,18 +29,18 @@ Lastly, we were happy to find that `glib` and `gobject` were already installed a
 
 ## Contents
 
-Because of the way we build `libvips` by using existing libraries already installed on AWS Lambda, the resulting layer is very small. Only around `9MB` in total un-compressed size.
+Because of the way we build `libvips` by using existing libraries already installed on AWS Lambda, the resulting layer is very small. Only around `10MB` in total un-compressed size.
 
 ```shell
 $ ls -lAGp /opt/lib
-total 9517
-lrwxrwxrwx 1 root      27 Apr 15 20:46 libglib-2.0.so -> /usr/lib64/libglib-2.0.so.0
-lrwxrwxrwx 1 root      30 Apr 15 20:46 libgobject-2.0.so -> /usr/lib64/libgobject-2.0.so.0
-lrwxrwxrwx 1 root      17 Apr 15 20:46 libvips.so -> libvips.so.42.9.5
-lrwxrwxrwx 1 root      17 Apr 15 20:46 libvips.so.42 -> libvips.so.42.9.5
--rwxr-xr-x 1 root 9745021 Apr 15 20:45 libvips.so.42.9.5
+lrwxrwxrwx 1 root      27 Jan 30 18:08 libglib-2.0.so -> /usr/lib64/libglib-2.0.so.0
+lrwxrwxrwx 1 root      30 Jan 30 18:08 libgobject-2.0.so -> /usr/lib64/libgobject-2.0.so.0
+lrwxrwxrwx 1 root      18 Jan 30 18:08 libimagequant.so -> libimagequant.so.0
+-rw-r--r-- 1 root   56576 Jan 30 18:08 libimagequant.so.0
+lrwxrwxrwx 1 root      18 Jan 30 18:08 libvips.so -> libvips.so.42.12.1
+lrwxrwxrwx 1 root      18 Jan 30 18:08 libvips.so.42 -> libvips.so.42.12.1
+-rwxr-xr-x 1 root 9954128 Jan 30 18:08 libvips.so.42.12.1
+
+$ ls -lAGp /opt/include
+-rw-r--r-- 1 root    6942 Jan 30 18:08 libimagequant.h
 ```
-
-
-
-

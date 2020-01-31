@@ -2,11 +2,33 @@ FROM lambci/lambda:build-ruby2.5
 
 WORKDIR /build
 
-ARG VIPS_VERSION=8.7.4
+ARG VIPS_VERSION=8.9.1
+ARG IMAGEQUANT_VERSION=2.12.6
 
 ENV WORKDIR="/build"
 ENV INSTALLDIR="/opt"
 ENV VIPS_VERSION=$VIPS_VERSION
+ENV IMAGEQUANT_VERSION=$IMAGEQUANT_VERSION
+
+# Setup Some Dirs
+#
+RUN mkdir -p \
+    share/lib \
+    share/include
+
+# Install libimagequant. Details: https://github.com/libvips/libvips/pull/1009
+#
+RUN git clone git://github.com/ImageOptim/libimagequant.git && \
+    cd ./libimagequant && \
+    git checkout "${IMAGEQUANT_VERSION}" && \
+    CC=clang CXX=clang++ ./configure --prefix=/opt && \
+    make libimagequant.so && \
+    make install && \
+    echo /opt/lib > /etc/ld.so.conf.d/libimagequant.conf && \
+    ldconfig
+RUN cp -a $INSTALLDIR/lib/libimagequant.so* $WORKDIR/share/lib/ && \
+    cp -a $INSTALLDIR/include/libimagequant.h $WORKDIR/share/include/
+
 
 # Install deps for libvips. Details: https://libvips.github.io/libvips/install.html
 #
@@ -25,6 +47,8 @@ RUN git clone git://github.com/libvips/libvips.git && \
 #
 RUN cd ./libvips && \
   CC=clang CXX=clang++ \
+  IMAGEQUANT_CFLAGS="-I/opt/include" \
+  IMAGEQUANT_LIBS="-L/opt/lib -limagequant" \
   ./autogen.sh \
   --prefix=${INSTALLDIR} \
   --disable-static && \
