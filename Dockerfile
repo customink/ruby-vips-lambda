@@ -70,3 +70,7 @@ RUN cd ./share/lib/ && \
 #
 RUN cd ./share && \
   zip --symlinks -r libvips.zip .
+
+# Store the VIPS_VERSION variable in a file, accessible to the deploy script.
+#
+RUN echo VIPS_VERSION=$VIPS_VERSION >> $WORKDIR/share/.env
