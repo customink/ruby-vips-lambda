@@ -16,4 +16,4 @@ docker build \
 docker run --rm \
   -v "${PWD}/share:/share" \
   $IMAGE_NAME \
-  sh -c "cp /build/share/libvips.zip /share"
+  sh -c "cp /build/share/{libvips.zip,.env} /share"
