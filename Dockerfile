@@ -1,4 +1,4 @@
-FROM lambci/lambda:build-ruby2.5
+FROM lambci/lambda:build-ruby2.7
 
 WORKDIR /build
 
@@ -15,6 +15,10 @@ ENV IMAGEQUANT_VERSION=$IMAGEQUANT_VERSION
 RUN mkdir -p \
     share/lib \
     share/include
+
+# Install xpat
+#
+RUN yum install -y expat-devel
 
 # Install libimagequant. Details: https://github.com/libvips/libvips/pull/1009
 #
