@@ -11,4 +11,4 @@ LAYER_NAME="rubyvips${VIPS_VERSION//./}"
 aws lambda publish-layer-version \
   --layer-name $LAYER_NAME \
   --description "Libvips for Ruby FFI." \
-  --zip-file "fileb://$(pwd)/share/libvips.zip"
+  --zip-file "fileb://share/libvips.zip"
