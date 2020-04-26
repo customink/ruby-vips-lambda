@@ -4,8 +4,7 @@ set -e
 
 ./bin/build
 
-. ./share/.env
-
+VIPS_VERSION=$(cat share/.VIPS_VERSION)
 LAYER_NAME="rubyvips${VIPS_VERSION//./}"
 
 aws lambda publish-layer-version \

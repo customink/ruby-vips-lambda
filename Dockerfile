@@ -73,4 +73,4 @@ RUN cd ./share && \
 
 # Store the VIPS_VERSION variable in a file, accessible to the deploy script.
 #
-RUN echo VIPS_VERSION=$VIPS_VERSION >> $WORKDIR/share/.env
+RUN echo $VIPS_VERSION >> $WORKDIR/share/.VIPS_VERSION
