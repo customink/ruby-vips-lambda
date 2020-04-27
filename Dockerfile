@@ -67,8 +67,8 @@ RUN mkdir -p share/lib && \
 
 # Create sym links for ruby-ffi gem's `glib_libname` and `gobject_libname` to work.
 RUN cd ./share/lib/ && \
-  ln -s /usr/lib64/libglib-2.0.so.0 libglib-2.0.so && \
-  ln -s /usr/lib64/libgobject-2.0.so.0 libgobject-2.0.so
+  cp /usr/lib64/libglib-2.0* . && \
+  cp /usr/lib64/libgobject-2.0* .
 
 # Zip up contents so final `lib` can be placed in /opt layer.
 #
