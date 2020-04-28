@@ -22,25 +22,38 @@ From there you simply use the arn in your AWS SAM `template.yaml` file.
 
 Simplicity and small file size! We followed the [docs](https://libvips.github.io/libvips/install.html) for `libvips` install. But because AWS Lambda already has ImageMagick and lots of the needed dependencies, the work was very basic.
 
-We used the `lambci/lambda:build-ruby2.7` Docker image from the [docker-lambda](https://github.com/lambci/docker-lambda) project. From there we only had to install a few more dependencies to get libvips installed. The current version is `v8.7.4` and easy to configure if you need something else.
+We used the `lambci/lambda:build-ruby2.7` Docker image from the [docker-lambda](https://github.com/lambci/docker-lambda) project. From there we only had to install a few more dependencies to get libvips installed. The current version is `v8.9.2` and easy to configure if you need something else.
 
 Lastly, we were happy to find that `glib` and `gobject` were already installed and all that was needed were some simple sym links so FFI could load these libraries.
 
 
 ## Contents
 
-Because of the way we build `libvips` by using existing libraries already installed on AWS Lambda, the resulting layer is very small. Only around `10MB` in total un-compressed size.
+Current size of the layer's un-compressed contents is around `15MB` in size.
 
 ```shell
 $ ls -lAGp /opt/lib
-lrwxrwxrwx 1 root      27 Jan 30 18:08 libglib-2.0.so -> /usr/lib64/libglib-2.0.so.0
-lrwxrwxrwx 1 root      30 Jan 30 18:08 libgobject-2.0.so -> /usr/lib64/libgobject-2.0.so.0
-lrwxrwxrwx 1 root      18 Jan 30 18:08 libimagequant.so -> libimagequant.so.0
--rw-r--r-- 1 root   56576 Jan 30 18:08 libimagequant.so.0
-lrwxrwxrwx 1 root      18 Jan 30 18:08 libvips.so -> libvips.so.42.12.1
-lrwxrwxrwx 1 root      18 Jan 30 18:08 libvips.so.42 -> libvips.so.42.12.1
--rwxr-xr-x 1 root 9954128 Jan 30 18:08 libvips.so.42.12.1
+-rwxr-xr-x  1 root   201K Apr 27 20:30 libexpat.so
+-rwxr-xr-x  1 root   201K Apr 27 20:30 libexpat.so.1
+-rwxr-xr-x  1 root   201K Apr 27 20:30 libexpat.so.1.6.0
+-rwxr-xr-x  1 root   1.1M Apr 27 20:30 libglib-2.0.so
+-rwxr-xr-x  1 root   1.1M Apr 27 20:30 libglib-2.0.so.0
+-rwxr-xr-x  1 root   1.1M Apr 27 20:30 libglib-2.0.so.0.5600.1
+-rwxr-xr-x  1 root    15K Apr 27 20:30 libgmodule-2.0.so
+-rwxr-xr-x  1 root    15K Apr 27 20:30 libgmodule-2.0.so.0
+-rwxr-xr-x  1 root    15K Apr 27 20:30 libgmodule-2.0.so.0.5600.1
+-rwxr-xr-x  1 root   327K Apr 27 20:30 libgobject-2.0.so
+-rwxr-xr-x  1 root   327K Apr 27 20:30 libgobject-2.0.so.0
+-rwxr-xr-x  1 root   327K Apr 27 20:30 libgobject-2.0.so.0.5600.1
+-rwxr-xr-x  1 root   6.7K Apr 27 20:30 libgthread-2.0.so
+-rwxr-xr-x  1 root   6.7K Apr 27 20:30 libgthread-2.0.so.0
+-rwxr-xr-x  1 root   6.7K Apr 27 20:30 libgthread-2.0.so.0.5600.1
+lrwxrwxrwx  1 root    18B Apr 27 20:26 libimagequant.so -> libimagequant.so.0
+-rw-r--r--  1 root    65K Apr 27 20:26 libimagequant.so.0
+lrwxrwxrwx  1 root    18B Apr 27 20:29 libvips.so -> libvips.so.42.12.2
+lrwxrwxrwx  1 root    18B Apr 27 20:29 libvips.so.42 -> libvips.so.42.12.2
+-rwxr-xr-x  1 root   9.6M Apr 27 20:29 libvips.so.42.12.2
 
 $ ls -lAGp /opt/include
--rw-r--r-- 1 root    6942 Jan 30 18:08 libimagequant.h
+-rw-r--r--  1 root    6942 Jan 30 18:08 libimagequant.h
 ```

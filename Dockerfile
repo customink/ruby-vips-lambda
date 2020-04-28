@@ -65,10 +65,14 @@ RUN cd ./libvips && \
 RUN mkdir -p share/lib && \
   cp -a $INSTALLDIR/lib/libvips.so* $WORKDIR/share/lib/
 
-# Create sym links for ruby-ffi gem's `glib_libname` and `gobject_libname` to work.
+# Copy glib and gobject with their deps over.
 RUN cd ./share/lib/ && \
   cp /usr/lib64/libglib-2.0* . && \
-  cp /usr/lib64/libgobject-2.0* .
+  cp /usr/lib64/libgobject-2.0* . && \
+  cp /usr/lib64/libgthread-2.0* . && \
+  cp /usr/lib64/libgmodule-2.0* . && \
+  cp /usr/lib64/libexpat* . && \
+  ldconfig
 
 # Zip up contents so final `lib` can be placed in /opt layer.
 #
