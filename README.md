@@ -22,25 +22,53 @@ From there you simply use the arn in your AWS SAM `template.yaml` file.
 
 Simplicity and small file size! We followed the [docs](https://libvips.github.io/libvips/install.html) for `libvips` install. But because AWS Lambda already has ImageMagick and lots of the needed dependencies, the work was very basic.
 
-We used the `lambci/lambda:build-ruby2.5` Docker image from the [docker-lambda](https://github.com/lambci/docker-lambda) project. From there we only had to install a few more dependencies to get libvips installed. The current version is `v8.7.4` and easy to configure if you need something else.
+We used the `lambci/lambda:build-ruby2.7` Docker image from the [docker-lambda](https://github.com/lambci/docker-lambda) project. From there we only had to install a few more dependencies to get libvips installed. The current version is `v8.9.2` and easy to configure if you need something else.
 
 Lastly, we were happy to find that `glib` and `gobject` were already installed and all that was needed were some simple sym links so FFI could load these libraries.
 
 
 ## Contents
 
-Because of the way we build `libvips` by using existing libraries already installed on AWS Lambda, the resulting layer is very small. Only around `10MB` in total un-compressed size.
+Current size of the layer's un-compressed contents is around `21MB` in size. Contents include:
 
 ```shell
 $ ls -lAGp /opt/lib
-lrwxrwxrwx 1 root      27 Jan 30 18:08 libglib-2.0.so -> /usr/lib64/libglib-2.0.so.0
-lrwxrwxrwx 1 root      30 Jan 30 18:08 libgobject-2.0.so -> /usr/lib64/libgobject-2.0.so.0
-lrwxrwxrwx 1 root      18 Jan 30 18:08 libimagequant.so -> libimagequant.so.0
--rw-r--r-- 1 root   56576 Jan 30 18:08 libimagequant.so.0
-lrwxrwxrwx 1 root      18 Jan 30 18:08 libvips.so -> libvips.so.42.12.1
-lrwxrwxrwx 1 root      18 Jan 30 18:08 libvips.so.42 -> libvips.so.42.12.1
--rwxr-xr-x 1 root 9954128 Jan 30 18:08 libvips.so.42.12.1
+lrwxrwxrwx  1 root    18B Apr 29 23:53 libexpat.so -> libexpat.so.1.6.11
+lrwxrwxrwx  1 root    18B Apr 29 23:53 libexpat.so.1 -> libexpat.so.1.6.11
+-rwxr-xr-x  1 root   543K Apr 29 23:53 libexpat.so.1.6.11
+lrwxrwxrwx  1 root    11B Apr 29 23:53 libffi.so -> libffi.so.7
+lrwxrwxrwx  1 root    15B Apr 29 23:53 libffi.so.7 -> libffi.so.7.1.0
+-rwxr-xr-x  1 root   158K Apr 29 23:53 libffi.so.7.1.0
+lrwxrwxrwx  1 root    11B Apr 29 23:53 libgif.so -> libgif.so.7
+lrwxrwxrwx  1 root    15B Apr 29 23:53 libgif.so.7 -> libgif.so.7.2.0
+-rwxr-xr-x  1 root    36K Apr 29 23:53 libgif.so.7.2.0
+lrwxrwxrwx  1 root    16B Apr 29 23:53 libglib-2.0.so -> libglib-2.0.so.0
+lrwxrwxrwx  1 root    23B Apr 29 23:53 libglib-2.0.so.0 -> libglib-2.0.so.0.6400.2
+-rwxr-xr-x  1 root   4.7M Apr 29 23:53 libglib-2.0.so.0.6400.2
+lrwxrwxrwx  1 root    19B Apr 29 23:53 libgmodule-2.0.so -> libgmodule-2.0.so.0
+lrwxrwxrwx  1 root    26B Apr 29 23:53 libgmodule-2.0.so.0 -> libgmodule-2.0.so.0.6400.2
+-rwxr-xr-x  1 root    49K Apr 29 23:53 libgmodule-2.0.so.0.6400.2
+lrwxrwxrwx  1 root    19B Apr 29 23:53 libgobject-2.0.so -> libgobject-2.0.so.0
+lrwxrwxrwx  1 root    26B Apr 29 23:53 libgobject-2.0.so.0 -> libgobject-2.0.so.0.6400.2
+-rwxr-xr-x  1 root   1.7M Apr 29 23:53 libgobject-2.0.so.0.6400.2
+lrwxrwxrwx  1 root    19B Apr 29 23:53 libgthread-2.0.so -> libgthread-2.0.so.0
+lrwxrwxrwx  1 root    26B Apr 29 23:53 libgthread-2.0.so.0 -> libgthread-2.0.so.0.6400.2
+-rwxr-xr-x  1 root    14K Apr 29 23:53 libgthread-2.0.so.0.6400.2
+lrwxrwxrwx  1 root    18B Apr 29 23:53 libimagequant.so -> libimagequant.so.0
+-rw-r--r--  1 root    85K Apr 29 23:53 libimagequant.so.0
+lrwxrwxrwx  1 root    13B Apr 29 23:53 libjpeg.so -> libjpeg.so.62
+lrwxrwxrwx  1 root    17B Apr 29 23:53 libjpeg.so.62 -> libjpeg.so.62.3.0
+-rwxr-xr-x  1 root   464K Apr 29 23:53 libjpeg.so.62.3.0
+lrwxrwxrwx  1 root    11B Apr 29 23:53 libpng.so -> libpng16.so
+lrwxrwxrwx  1 root    19B Apr 29 23:53 libpng16.so -> libpng16.so.16.37.0
+lrwxrwxrwx  1 root    19B Apr 29 23:53 libpng16.so.16 -> libpng16.so.16.37.0
+-rwxr-xr-x  1 root   891K Apr 29 23:53 libpng16.so.16.37.0
+lrwxrwxrwx  1 root    17B Apr 29 23:53 libturbojpeg.so -> libturbojpeg.so.0
+lrwxrwxrwx  1 root    21B Apr 29 23:53 libturbojpeg.so.0 -> libturbojpeg.so.0.2.0
+-rwxr-xr-x  1 root   583K Apr 29 23:53 libturbojpeg.so.0.2.0
+lrwxrwxrwx  1 root    18B Apr 29 23:53 libvips.so -> libvips.so.42.12.2
+lrwxrwxrwx  1 root    18B Apr 29 23:53 libvips.so.42 -> libvips.so.42.12.2
+-rwxr-xr-x  1 root    11M Apr 29 23:53 libvips.so.42.12.2
 
 $ ls -lAGp /opt/include
--rw-r--r-- 1 root    6942 Jan 30 18:08 libimagequant.h
-```
+-rw-r--r--  1 root   6.8K Apr 29 23:53 libimagequant.h```
