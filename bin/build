@@ -2,8 +2,8 @@
 
 set -e
 
-IMAGE_NAME=ruby-vips-lambda
-VIPS_VERSION=${VIPS_VERSION:=8.9.2}
+export IMAGE_NAME=ruby-vips-lambda
+export VIPS_VERSION=${VIPS_VERSION:=8.9.2}
 
 rm -rf ./share
 mkdir ./share
@@ -11,9 +11,11 @@ mkdir ./share
 docker build \
   --no-cache \
   --build-arg VIPS_VERSION=${VIPS_VERSION} \
-  -t $IMAGE_NAME .
+  --tag $IMAGE_NAME \
+  .
 
-docker run --rm \
-  -v "${PWD}/share:/share" \
-  $IMAGE_NAME \
-  sh -c "cp /build/share/{libvips.zip,.VIPS_VERSION} /share"
+docker run \
+  --rm \
+  --volume "${PWD}/share:/share" \
+  "${IMAGE_NAME}:latest" \
+  sh -c "cp -r /build/share/* /share"

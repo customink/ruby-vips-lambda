@@ -4,8 +4,8 @@ set -e
 
 ./bin/build
 
-VIPS_VERSION=$(cat share/.VIPS_VERSION)
-LAYER_NAME="rubyvips${VIPS_VERSION//./}-27"
+export VIPS_VERSION=$(cat share/VIPS_VERSION)
+export LAYER_NAME="rubyvips${VIPS_VERSION//./}-27"
 
 aws lambda publish-layer-version \
   --layer-name $LAYER_NAME \
