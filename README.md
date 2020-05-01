@@ -8,6 +8,10 @@ Maybe you are using our [Lamby](https://github.com/customink/lamby) infrastructu
 
 **[Lamby: Simple Rails & AWS Lambda Integration using Rack.](https://github.com/customink/lamby)**
 
+## Alternatives
+
+The [Yumda](https://github.com/lambci/yumda) project form Serverless Hero Michael Hart recently added libvips package support. It installs both ImageMagick and Libvips and is an excellent alterative to this project. Check it out!
+
 
 ## Usage
 
