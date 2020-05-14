@@ -2,4 +2,4 @@
 
 set -e
 
-echo "✅ No setup needed."
+docker pull lambci/yumda:2

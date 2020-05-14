@@ -2,14 +2,12 @@
 
 set -e
 
+export AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:=us-east-1}
+
 ./bin/build
 
-export VIPS_VERSION=$(cat share/VIPS_VERSION)
-export LAYER_NAME="rubyvips${VIPS_VERSION//./}-27"
-export AWS_REGION=${AWS_REGION:=us-east-1}
-
 aws lambda publish-layer-version \
-  --region $AWS_REGION \
-  --layer-name $LAYER_NAME \
+  --region=$AWS_DEFAULT_REGION \
+  --layer-name "rubyvips-gm-yumda-892" \
   --description "Libvips for Ruby FFI." \
-  --zip-file "fileb://share/libvips.zip"
+  --zip-file "fileb://dk-opt/libvips-yumda.zip"

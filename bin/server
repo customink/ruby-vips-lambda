@@ -2,6 +2,10 @@
 
 set -e
 
-IMAGE_NAME=ruby-vips-lambda
-
-docker run -it -v "${PWD}:/var/task" --rm $IMAGE_NAME bash
+docker run \
+  --rm \
+  --tty \
+  --interactive \
+  --volume "${PWD}/dk-opt":/lambda/opt \
+  lambci/yumda:2 \
+  bash
