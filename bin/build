@@ -12,6 +12,12 @@ docker run \
   yum install -y GraphicsMagick vips
 
 docker run \
+ --rm \
+ --volume "${PWD}/dk-opt":/lambda/opt \
+ lambci/yumda:2 \
+ bash -c 'cd /lambda/opt/share && rm -rf X11 fonts ghostscript licenses poppler libthai fontconfig'
+
+docker run \
   --rm \
   --volume "${PWD}/dk-opt":/lambda/opt \
   lambci/yumda:2 \

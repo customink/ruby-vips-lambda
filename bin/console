@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+docker run \
+  --rm \
+  --tty \
+  --interactive \
+  --volume "${PWD}/dk-opt":/opt \
+  lambci/lambda:build-ruby2.7 \
+  bash
