@@ -2,7 +2,7 @@ FROM lambci/lambda:build-ruby2.7
 
 WORKDIR /build
 
-ARG VIPS_VERSION=8.9.2
+ARG VIPS_VERSION=8.10.0
 
 ENV VIPS_VERSION=$VIPS_VERSION
 ENV PATH=/opt/bin:$PATH
@@ -93,6 +93,7 @@ RUN curl -L http://ftp.gnome.org/pub/gnome/sources/glib/2.64/glib-2.64.2.tar.xz 
     ninja install
 
 RUN cp -a /opt/lib64/libffi.so* /build/share/lib && \
+    cp -a /opt/lib64/libgio-2.0.so* /build/share/lib && \
     cp -a /opt/lib64/libglib-2.0.so* /build/share/lib && \
     cp -a /opt/lib64/libgmodule-2.0.so* /build/share/lib && \
     cp -a /opt/lib64/libgobject-2.0.so* /build/share/lib && \

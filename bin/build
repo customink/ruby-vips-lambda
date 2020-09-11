@@ -3,7 +3,7 @@
 set -e
 
 export IMAGE_NAME=ruby-vips-lambda
-export VIPS_VERSION=${VIPS_VERSION:=8.9.2}
+export VIPS_VERSION=${VIPS_VERSION:=8.10.0}
 
 rm -rf ./share
 mkdir ./share
