@@ -2,7 +2,7 @@ FROM lambci/lambda:build-ruby2.5
 
 WORKDIR /build
 
-ARG VIPS_VERSION=8.9.1
+ARG VIPS_VERSION=8.10.0
 ARG IMAGEQUANT_VERSION=2.12.6
 
 ENV WORKDIR="/build"
@@ -51,6 +51,7 @@ RUN cd ./libvips && \
   IMAGEQUANT_LIBS="-L/opt/lib -limagequant" \
   ./autogen.sh \
   --prefix=${INSTALLDIR} \
+  --without-magick \
   --disable-static && \
   make install && \
   echo /opt/lib > /etc/ld.so.conf.d/libvips.conf && \
