@@ -33,46 +33,61 @@ Lastly, we were happy to find that `glib` and `gobject` were already installed a
 
 ## Contents
 
-Current size of the layer's un-compressed contents is around `21MB` in size. Contents include:
+Current size of the layer's un-compressed contents is around `28MB` in size. Contents include:
 
 ```shell
 $ ls -lAGp /opt/lib
-lrwxrwxrwx  1 root    18B Apr 29 23:53 libexpat.so -> libexpat.so.1.6.11
-lrwxrwxrwx  1 root    18B Apr 29 23:53 libexpat.so.1 -> libexpat.so.1.6.11
--rwxr-xr-x  1 root   543K Apr 29 23:53 libexpat.so.1.6.11
-lrwxrwxrwx  1 root    11B Apr 29 23:53 libffi.so -> libffi.so.7
-lrwxrwxrwx  1 root    15B Apr 29 23:53 libffi.so.7 -> libffi.so.7.1.0
--rwxr-xr-x  1 root   158K Apr 29 23:53 libffi.so.7.1.0
-lrwxrwxrwx  1 root    11B Apr 29 23:53 libgif.so -> libgif.so.7
-lrwxrwxrwx  1 root    15B Apr 29 23:53 libgif.so.7 -> libgif.so.7.2.0
--rwxr-xr-x  1 root    36K Apr 29 23:53 libgif.so.7.2.0
-lrwxrwxrwx  1 root    16B Apr 29 23:53 libglib-2.0.so -> libglib-2.0.so.0
-lrwxrwxrwx  1 root    23B Apr 29 23:53 libglib-2.0.so.0 -> libglib-2.0.so.0.6400.2
--rwxr-xr-x  1 root   4.7M Apr 29 23:53 libglib-2.0.so.0.6400.2
-lrwxrwxrwx  1 root    19B Apr 29 23:53 libgmodule-2.0.so -> libgmodule-2.0.so.0
-lrwxrwxrwx  1 root    26B Apr 29 23:53 libgmodule-2.0.so.0 -> libgmodule-2.0.so.0.6400.2
--rwxr-xr-x  1 root    49K Apr 29 23:53 libgmodule-2.0.so.0.6400.2
-lrwxrwxrwx  1 root    19B Apr 29 23:53 libgobject-2.0.so -> libgobject-2.0.so.0
-lrwxrwxrwx  1 root    26B Apr 29 23:53 libgobject-2.0.so.0 -> libgobject-2.0.so.0.6400.2
--rwxr-xr-x  1 root   1.7M Apr 29 23:53 libgobject-2.0.so.0.6400.2
-lrwxrwxrwx  1 root    19B Apr 29 23:53 libgthread-2.0.so -> libgthread-2.0.so.0
-lrwxrwxrwx  1 root    26B Apr 29 23:53 libgthread-2.0.so.0 -> libgthread-2.0.so.0.6400.2
--rwxr-xr-x  1 root    14K Apr 29 23:53 libgthread-2.0.so.0.6400.2
-lrwxrwxrwx  1 root    18B Apr 29 23:53 libimagequant.so -> libimagequant.so.0
--rw-r--r--  1 root    85K Apr 29 23:53 libimagequant.so.0
-lrwxrwxrwx  1 root    13B Apr 29 23:53 libjpeg.so -> libjpeg.so.62
-lrwxrwxrwx  1 root    17B Apr 29 23:53 libjpeg.so.62 -> libjpeg.so.62.3.0
--rwxr-xr-x  1 root   464K Apr 29 23:53 libjpeg.so.62.3.0
-lrwxrwxrwx  1 root    11B Apr 29 23:53 libpng.so -> libpng16.so
-lrwxrwxrwx  1 root    19B Apr 29 23:53 libpng16.so -> libpng16.so.16.37.0
-lrwxrwxrwx  1 root    19B Apr 29 23:53 libpng16.so.16 -> libpng16.so.16.37.0
--rwxr-xr-x  1 root   891K Apr 29 23:53 libpng16.so.16.37.0
-lrwxrwxrwx  1 root    17B Apr 29 23:53 libturbojpeg.so -> libturbojpeg.so.0
-lrwxrwxrwx  1 root    21B Apr 29 23:53 libturbojpeg.so.0 -> libturbojpeg.so.0.2.0
--rwxr-xr-x  1 root   583K Apr 29 23:53 libturbojpeg.so.0.2.0
-lrwxrwxrwx  1 root    18B Apr 29 23:53 libvips.so -> libvips.so.42.12.2
-lrwxrwxrwx  1 root    18B Apr 29 23:53 libvips.so.42 -> libvips.so.42.12.2
--rwxr-xr-x  1 root    11M Apr 29 23:53 libvips.so.42.12.2
+lrwxrwxrwx 1 root       18 Sep 19 22:46 libexpat.so -> libexpat.so.1.6.11
+lrwxrwxrwx 1 root       18 Sep 19 22:46 libexpat.so.1 -> libexpat.so.1.6.11
+-rwxr-xr-x 1 root   231496 Sep 19 22:46 libexpat.so.1.6.11
+lrwxrwxrwx 1 root       11 Sep 19 22:53 libffi.so -> libffi.so.7
+lrwxrwxrwx 1 root       15 Sep 19 22:53 libffi.so.7 -> libffi.so.7.1.0
+-rwxr-xr-x 1 root   196304 Sep 19 22:52 libffi.so.7.1.0
+-rwxr-xr-x 1 root      926 Sep 19 22:50 libfftw3.la
+lrwxrwxrwx 1 root       17 Sep 19 22:50 libfftw3.so -> libfftw3.so.3.5.8
+lrwxrwxrwx 1 root       17 Sep 19 22:50 libfftw3.so.3 -> libfftw3.so.3.5.8
+-rwxr-xr-x 1 root  2327176 Sep 19 22:50 libfftw3.so.3.5.8
+-rwxr-xr-x 1 root     1004 Sep 19 22:50 libfftw3_threads.la
+lrwxrwxrwx 1 root       25 Sep 19 22:50 libfftw3_threads.so -> libfftw3_threads.so.3.5.8
+lrwxrwxrwx 1 root       25 Sep 19 22:50 libfftw3_threads.so.3 -> libfftw3_threads.so.3.5.8
+-rwxr-xr-x 1 root    33968 Sep 19 22:50 libfftw3_threads.so.3.5.8
+lrwxrwxrwx 1 root       11 Sep 19 22:46 libgif.so -> libgif.so.7
+lrwxrwxrwx 1 root       15 Sep 19 22:46 libgif.so.7 -> libgif.so.7.2.0
+-rwxr-xr-x 1 root    36568 Sep 19 22:46 libgif.so.7.2.0
+lrwxrwxrwx 1 root       15 Sep 19 22:53 libgio-2.0.so -> libgio-2.0.so.0
+lrwxrwxrwx 1 root       22 Sep 19 22:53 libgio-2.0.so.0 -> libgio-2.0.so.0.6400.2
+-rwxr-xr-x 1 root 10701792 Sep 19 22:53 libgio-2.0.so.0.6400.2
+lrwxrwxrwx 1 root       16 Sep 19 22:53 libglib-2.0.so -> libglib-2.0.so.0
+lrwxrwxrwx 1 root       23 Sep 19 22:53 libglib-2.0.so.0 -> libglib-2.0.so.0.6400.2
+-rwxr-xr-x 1 root  5742552 Sep 19 22:52 libglib-2.0.so.0.6400.2
+lrwxrwxrwx 1 root       19 Sep 19 22:53 libgmodule-2.0.so -> libgmodule-2.0.so.0
+lrwxrwxrwx 1 root       26 Sep 19 22:53 libgmodule-2.0.so.0 -> libgmodule-2.0.so.0.6400.2
+-rwxr-xr-x 1 root    50400 Sep 19 22:53 libgmodule-2.0.so.0.6400.2
+lrwxrwxrwx 1 root       19 Sep 19 22:53 libgobject-2.0.so -> libgobject-2.0.so.0
+lrwxrwxrwx 1 root       26 Sep 19 22:53 libgobject-2.0.so.0 -> libgobject-2.0.so.0.6400.2
+-rwxr-xr-x 1 root  1856656 Sep 19 22:53 libgobject-2.0.so.0.6400.2
+lrwxrwxrwx 1 root       19 Sep 19 22:53 libgthread-2.0.so -> libgthread-2.0.so.0
+lrwxrwxrwx 1 root       26 Sep 19 22:53 libgthread-2.0.so.0 -> libgthread-2.0.so.0.6400.2
+-rwxr-xr-x 1 root    14840 Sep 19 22:53 libgthread-2.0.so.0.6400.2
+lrwxrwxrwx 1 root       18 Sep 19 22:47 libimagequant.so -> libimagequant.so.0
+-rw-r--r-- 1 root    62432 Sep 19 22:47 libimagequant.so.0
+lrwxrwxrwx 1 root       13 Sep 19 22:47 libjpeg.so -> libjpeg.so.62
+lrwxrwxrwx 1 root       17 Sep 19 22:47 libjpeg.so.62 -> libjpeg.so.62.3.0
+-rwxr-xr-x 1 root   475448 Sep 19 22:47 libjpeg.so.62.3.0
+lrwxrwxrwx 1 root       20 Sep 19 22:51 liborc-0.4.so -> liborc-0.4.so.0.25.0
+lrwxrwxrwx 1 root       20 Sep 19 22:51 liborc-0.4.so.0 -> liborc-0.4.so.0.25.0
+-rwxr-xr-x 1 root   797976 Sep 19 22:51 liborc-0.4.so.0.25.0
+lrwxrwxrwx 1 root       19 Sep 19 22:46 libpng16.so -> libpng16.so.16.37.0
+lrwxrwxrwx 1 root       19 Sep 19 22:46 libpng16.so.16 -> libpng16.so.16.37.0
+-rwxr-xr-x 1 root   285720 Sep 19 22:46 libpng16.so.16.37.0
+lrwxrwxrwx 1 root       11 Sep 19 22:46 libpng.so -> libpng16.so
+lrwxrwxrwx 1 root       17 Sep 19 22:47 libturbojpeg.so -> libturbojpeg.so.0
+lrwxrwxrwx 1 root       21 Sep 19 22:47 libturbojpeg.so.0 -> libturbojpeg.so.0.2.0
+-rwxr-xr-x 1 root   596576 Sep 19 22:47 libturbojpeg.so.0.2.0
+lrwxrwxrwx 1 root       18 Sep 19 22:58 libvips.so -> libvips.so.42.12.3
+lrwxrwxrwx 1 root       18 Sep 19 22:58 libvips.so.42 -> libvips.so.42.12.3
+-rwxr-xr-x 1 root  4257200 Sep 19 22:58 libvips.so.42.12.3
 
 $ ls -lAGp /opt/include
--rw-r--r--  1 root   6.8K Apr 29 23:53 libimagequant.h```
+-rw-r--r-- 1 root     6942 Sep 19 22:47 libimagequant.h
+```

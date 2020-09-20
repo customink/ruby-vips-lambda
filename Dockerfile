@@ -2,12 +2,14 @@ FROM lambci/lambda:build-ruby2.7
 
 WORKDIR /build
 
-ARG VIPS_VERSION=8.9.2
+ARG VIPS_VERSION=8.10.0
 
 ENV VIPS_VERSION=$VIPS_VERSION
 ENV PATH=/opt/bin:$PATH
 ENV LD_LIBRARY_PATH=/opt/lib:/opt/lib64:$LD_LIBRARY_PATH
 ENV PKG_CONFIG_PATH=/opt/lib/pkgconfig:/opt/lib64/pkgconfig
+ENV CFLAGS="-fexceptions -Wall -O3"
+ENV CXXFLAGS="${CFLAGS}"
 
 # Setup Some Dirs
 #
@@ -74,6 +76,33 @@ RUN git clone https://github.com/ImageOptim/libimagequant.git && \
 RUN cp -a /opt/lib/libimagequant.so* /build/share/lib/ && \
     cp -a /opt/include/libimagequant.h /build/share/include/
 
+# Install libfftw
+#
+RUN curl -L http://www.fftw.org/fftw-3.3.8.tar.gz > fftw-3.3.8.tar.gz && \
+    tar -xf fftw-3.3.8.tar.gz && \
+    cd ./fftw-3.3.8 && \
+    ./configure \
+      --prefix=/opt \
+      --enable-shared \
+      --disable-static \
+      --enable-threads \
+      --enable-sse2 \
+      --enable-avx && \
+    make && \
+    make install
+
+RUN cp -a /opt/lib/libfftw3* /build/share/lib/
+
+# Install liborc (perf)
+#
+RUN curl -L https://gstreamer.freedesktop.org/data/src/orc/orc-0.4.26.tar.xz > orc-0.4.26.tar.xz && \
+    tar -xf orc-0.4.26.tar.xz && \
+    cd orc-0.4.26 && \
+    ./configure --prefix=/opt && \
+    make && \
+    make install
+RUN cp -a /opt/lib/liborc-0.4.so* /build/share/lib/
+
 # Install libvips. Primary deps https://libvips.github.io/libvips/install.html
 #
 RUN yum install -y \
@@ -93,6 +122,7 @@ RUN curl -L http://ftp.gnome.org/pub/gnome/sources/glib/2.64/glib-2.64.2.tar.xz 
     ninja install
 
 RUN cp -a /opt/lib64/libffi.so* /build/share/lib && \
+    cp -a /opt/lib64/libgio-2.0.so* /build/share/lib && \
     cp -a /opt/lib64/libglib-2.0.so* /build/share/lib && \
     cp -a /opt/lib64/libgmodule-2.0.so* /build/share/lib && \
     cp -a /opt/lib64/libgobject-2.0.so* /build/share/lib && \
