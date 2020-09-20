@@ -1,35 +1,27 @@
 
+# Ruby Libvips Lambda Layer
 
-## Ruby Libvips Lambda Layer
-
-<a href="https://github.com/customink/lamby"><img src="https://user-images.githubusercontent.com/2381/59363668-89edeb80-8d03-11e9-9985-2ce14361b7e3.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="300" /></a>Are you using the [ruby-vips](https://github.com/libvips/ruby-vips) gem? Maybe you are using the `ImageProcessing::Vips` interface of the fantastic [image_processing](https://github.com/janko/image_processing) gem which Rails v6 & ActiveStorage will use?
-
-Maybe you are using our [Lamby](https://github.com/customink/lamby) infrastructure to deploy your Rails app to AWS Lambda using simple Rack integration and documentation? If yes to any of the above, this [Lambda Layer](https://aws.amazon.com/blogs/compute/working-with-aws-lambda-and-lambda-layers-in-aws-sam/) is just for you.
+<a href="https://github.com/customink/lamby"><img src="https://user-images.githubusercontent.com/2381/59363668-89edeb80-8d03-11e9-9985-2ce14361b7e3.png" alt="Lamby: Simple Rails & AWS Lambda Integration using Rack." align="right" width="300" /></a>Are you using the [ruby-vips](https://github.com/libvips/ruby-vips) or [image_processing](https://github.com/janko/image_processing) gems with a Lambda microservice? Maybe you are using [Lamby](https://github.com/customink/lamby) to deploy your entire Rails application to AWS Lambda with its simple Rack integration? If yes to any of the above, this [Lambda Layer](https://aws.amazon.com/blogs/compute/working-with-aws-lambda-and-lambda-layers-in-aws-sam/) is just for you.
 
 **[Lamby: Simple Rails & AWS Lambda Integration using Rack.](https://github.com/customink/lamby)**
 
-## Alternatives
-
-The [Yumda](https://github.com/lambci/yumda) project form Serverless Hero Michael Hart recently added libvips package support. It installs both ImageMagick and Libvips and is an excellent alterative to this project. Check it out!
-
-
 ## Usage
 
-* Clone or fork this repository.
-* Make sure you have Docker or AWS CLI installed.
-* Run `./bin/deploy`
+Ensure you have both Docker installed and your AWS CLI configured. After you clone this repository, please run:
 
-From there you simply use the arn in your AWS SAM `template.yaml` file.
+```shell
+$ ./bin/deploy
+```
 
+This will call `./bin/build` for you and push your built Lambda Layer to your own account. Use the ARN in the script's output within your [AWS SAM](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-layers.html) `template.yaml` file. If needed you can use the `AWS_PROFILE` environment variable to control which CLI account is used.
+
+## Ruby 2.7 or 2.5?
+
+The master branch of this repo is targeted for the Ruby 2.7 runtime which is Amazon Linux 2. Most all dependencies needed for `libvips` have to be installed and packaged. Please use the [ruby25](https://github.com/customink/ruby-vips-lambda/tree/ruby25) branch which is Amazon Linux 1 if you use the ruby2.5 runtime.
 
 ## Methodology
 
-Simplicity and small file size! We followed the [docs](https://libvips.github.io/libvips/install.html) for `libvips` install. But because AWS Lambda already has ImageMagick and lots of the needed dependencies, the work was very basic.
-
-We used the `lambci/lambda:build-ruby2.7` Docker image from the [docker-lambda](https://github.com/lambci/docker-lambda) project. From there we only had to install a few more dependencies to get libvips installed. The current version is `v8.9.2` and easy to configure if you need something else.
-
-Lastly, we were happy to find that `glib` and `gobject` were already installed and all that was needed were some simple sym links so FFI could load these libraries.
-
+Simplicity and small file size! We followed the [docs](https://libvips.github.io/libvips/install.html) for `libvips` install. Our build script uses `lambci/lambda:build-ruby2.7` Docker image from the [docker-lambda](https://github.com/lambci/docker-lambda) project as our build environment. All build commands are located in the `Dockerfile` which install all the dependencies for libvips in the `/opt` directory. This includes common file format openers and savers as well as libs that ensure libvips is fast. The current version built is `8.10.0` and easy to configure by providing the `VIPS_VERSION` environment variable during the build or deploy script. 
 
 ## Contents
 
@@ -91,3 +83,8 @@ lrwxrwxrwx 1 root       18 Sep 19 22:58 libvips.so.42 -> libvips.so.42.12.3
 $ ls -lAGp /opt/include
 -rw-r--r-- 1 root     6942 Sep 19 22:47 libimagequant.h
 ```
+
+## Alternatives
+
+The [Yumda](https://github.com/lambci/yumda) project form Serverless Hero Michael Hart recently added libvips package support. It installs both ImageMagick and Libvips and is an excellent alterative to this project. Check it out!
+
