@@ -73,8 +73,7 @@ RUN git clone https://github.com/ImageOptim/libimagequant.git && \
     echo /opt/lib > /etc/ld.so.conf.d/libimagequant.conf && \
     ldconfig
 
-RUN cp -a /opt/lib/libimagequant.so* /build/share/lib/ && \
-    cp -a /opt/include/libimagequant.h /build/share/include/
+RUN cp -a /opt/lib/libimagequant.so* /build/share/lib/
 
 # Install libfftw
 #
@@ -154,7 +153,15 @@ RUN curl -L https://github.com/libvips/libvips/releases/download/v${VIPS_VERSION
     echo /opt/lib > /etc/ld.so.conf.d/libvips.conf && \
     ldconfig
 
-RUN cp -a /opt/lib/libvips.so* /build/share/lib
+RUN cp -a /opt/lib/libvips.so* /build/share/lib && \
+    cp -a /opt/lib/libvips-cpp* /build/share/lib
+
+# Copy all pkgconfig, includes for node sharp build.
+#
+RUN cp -a /opt/lib/pkgconfig /build/share/lib && \
+    cp -a /opt/lib64/pkgconfig/* /build/share/lib/pkgconfig && \
+    cp -a /opt/include /build/share && \
+    cp -a /opt/lib64/glib-2.0 /build/share/lib
 
 # Store the VIPS_VERSION variable in a file, accessible to the deploy script.
 #
