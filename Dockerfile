@@ -1,15 +1,17 @@
-FROM lambci/lambda:build-ruby2.7
+FROM public.ecr.aws/sam/build-nodejs16.x
 
 WORKDIR /build
 
-ARG VIPS_VERSION=8.10.0
-
+ARG VIPS_VERSION
 ENV VIPS_VERSION=$VIPS_VERSION
 ENV PATH=/opt/bin:$PATH
 ENV LD_LIBRARY_PATH=/opt/lib:/opt/lib64:$LD_LIBRARY_PATH
 ENV PKG_CONFIG_PATH=/opt/lib/pkgconfig:/opt/lib64/pkgconfig
 ENV CFLAGS="-fexceptions -Wall -O3"
 ENV CXXFLAGS="${CFLAGS}"
+
+# Build Tools
+RUN yum install -y cmake
 
 # Setup Some Dirs
 #
@@ -71,7 +73,7 @@ RUN git clone https://github.com/ImageOptim/libimagequant.git && \
     make libimagequant.so && \
     make install && \
     echo /opt/lib > /etc/ld.so.conf.d/libimagequant.conf && \
-    ldconfig
+    /usr/sbin/ldconfig
 
 RUN cp -a /opt/lib/libimagequant.so* /build/share/lib/
 
@@ -127,9 +129,9 @@ RUN cp -a /opt/lib64/libffi.so* /build/share/lib && \
     cp -a /opt/lib64/libgobject-2.0.so* /build/share/lib && \
     cp -a /opt/lib64/libgthread-2.0.so* /build/share/lib
 
-RUN curl -L http://ftp.gnome.org/pub/gnome/sources/gobject-introspection/1.64/gobject-introspection-1.64.1.tar.xz > gobject-introspection-1.64.1.tar.xz && \
-    tar -xf gobject-introspection-1.64.1.tar.xz && \
-    cd gobject-introspection-1.64.1 && \
+RUN curl -L http://ftp.gnome.org/pub/gnome/sources/gobject-introspection/1.72/gobject-introspection-1.72.0.tar.xz > gobject-introspection-1.72.0.tar.xz && \
+    tar -xf gobject-introspection-1.72.0.tar.xz && \
+    cd gobject-introspection-1.72.0 && \
     mkdir ./_build && \
     cd ./_build && \
     meson --prefix=/opt .. && \
@@ -151,7 +153,7 @@ RUN curl -L https://github.com/libvips/libvips/releases/download/v${VIPS_VERSION
     make && \
     make install && \
     echo /opt/lib > /etc/ld.so.conf.d/libvips.conf && \
-    ldconfig
+    /usr/sbin/ldconfig
 
 RUN cp -a /opt/lib/libvips.so* /build/share/lib && \
     cp -a /opt/lib/libvips-cpp* /build/share/lib
@@ -170,8 +172,3 @@ RUN echo $VIPS_VERSION > "./share/VIPS_VERSION"
 # Create an /build/share/opt/lib64 symlink for shared objects.
 #
 RUN cd ./share && ln -s lib lib64
-
-# Zip up contents so final `lib` can be placed in /opt layer.
-#
-RUN cd ./share && \
-    zip --symlinks -r libvips.zip .
