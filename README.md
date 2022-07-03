@@ -6,7 +6,7 @@
 
 ## Installation
 
-This project assumes the use of Lambda Containers. It uses a bare `alpine` Docker image to distribute the `/opt` directory contents which can be installed easily within your project. Please browse this project's [Layer Containers](https://github.com/orgs/customink/packages?repo_name=ruby-vips-lambda&q=extension) for a matching version number. For example:
+This project assumes the use of Lambda Containers. It uses a bare `alpine` Docker image to distribute the `/opt` directory contents which can be installed easily within your project. Please browse this project's [Layer Containers](https://github.com/orgs/customink/packages?repo_name=ruby-vips-lambda&q=layer) for a matching version number. For example:
 
 ```dockerfile
 FROM ghcr.io/customink/ruby-vips-lambda-layer:8.12.2.1 AS ruby-vips-lambda
@@ -32,4 +32,4 @@ VIPS_VERSION=8.12.2 PACKAGE_VERSION=1 ./bin/build
 
 ## Contents
 
-Current size of the layer's `/opt` directory is around around `32MB` in size. To see view the contents, exec into one of the [Layer Containers](https://github.com/orgs/customink/packages?repo_name=ruby-vips-lambda&q=extension)
+Current size of the layer's `/opt` directory is around around `32MB` in size. To see view the contents, exec into one of the [Layer Containers](https://github.com/orgs/customink/packages?repo_name=ruby-vips-lambda&q=layer)
