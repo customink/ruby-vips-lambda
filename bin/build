@@ -1,21 +1,27 @@
-#!/bin/bash
-
+#!/bin/sh
 set -e
 
-export IMAGE_NAME=ruby-vips-lambda
-export VIPS_VERSION=${VIPS_VERSION:=8.10.0}
+if [ -z "${VIPS_VERSION}" ]; then
+  echo "VIPS_VERSION is not set"
+  exit 1
+fi
+
+if [ -z "${PACKAGE_VERSION}" ]; then
+  echo "PACKAGE_VERSION is not set"
+  exit 1
+fi
+
+export IMAGE_NAME="ghcr.io/customink/ruby-vips-lambda-layer:${VIPS_VERSION}.${PACKAGE_VERSION}"
 
 rm -rf ./share
 mkdir ./share
 
 docker build \
-  --no-cache \
   --build-arg VIPS_VERSION=${VIPS_VERSION} \
   --tag $IMAGE_NAME \
   .
 
 docker run \
-  --rm \
   --volume "${PWD}/share:/share" \
-  "${IMAGE_NAME}:latest" \
+  "${IMAGE_NAME}" \
   sh -c "cp -r /build/share/* /share"

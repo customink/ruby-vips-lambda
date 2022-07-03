@@ -1,15 +1,25 @@
-#!/bin/bash
-
+#!/bin/sh
 set -e
 
-./bin/build
+if [ -z "${VIPS_VERSION}" ]; then
+  echo "VIPS_VERSION is not set"
+  exit 1
+fi
 
-export VIPS_VERSION=$(cat share/VIPS_VERSION)
-export LAYER_NAME="rubyvips${VIPS_VERSION//./}-27"
-export AWS_REGION=${AWS_REGION:=us-east-1}
+if [ -z "${PACKAGE_VERSION}" ]; then
+  echo "PACKAGE_VERSION is not set"
+  exit 1
+fi
 
-aws lambda publish-layer-version \
-  --region $AWS_REGION \
-  --layer-name $LAYER_NAME \
-  --description "Libvips for Ruby FFI." \
-  --zip-file "fileb://share/libvips.zip"
+export IMAGE_NAME="ghcr.io/customink/ruby-vips-lambda-layer:${VIPS_VERSION}.${PACKAGE_VERSION}"
+
+echo "== [Lambda Layer Container] build... =="
+
+docker build \
+  --tag "${IMAGE_NAME}" \
+  --file Dockerfile-layer \
+  .
+
+echo "== [Lambda Layer Container] push... =="
+
+docker push "${IMAGE_NAME}"

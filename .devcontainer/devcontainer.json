@@ -1,0 +1,9 @@
+{
+  "name": "ruby-vips-lambda",
+  "image": "mcr.microsoft.com/vscode/devcontainers/base",
+  "features": {
+    "aws-cli": "latest",
+    "docker-in-docker": "latest"
+  },
+  "remoteUser": "root"
+}

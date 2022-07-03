@@ -1,0 +1,4 @@
+FROM alpine
+LABEL org.opencontainers.image.source "https://github.com/customink/ruby-vips-lambda"
+LABEL org.opencontainers.image.description "AWS Lambda Layer for Ruby Libvips Gem"
+COPY ./share /opt/

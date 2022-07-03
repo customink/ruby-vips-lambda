@@ -1,7 +1,0 @@
-#!/bin/bash
-
-set -e
-
-IMAGE_NAME=ruby-vips-lambda
-
-docker rmi --force $IMAGE_NAME
